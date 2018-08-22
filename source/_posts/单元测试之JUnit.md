@@ -50,6 +50,6 @@ public class ExampleUnitTest {
 - @BeforeClass：针对所有测试，只执行一次
 - @AfterClass：针对所有测试，只执行一次
 
-> Before、After、Test、Ignore 所注解的方法必须为 *public void*, BeforeClass、而 AfterClass 所注解的方法必须为 *public static void*
+> Before、After、Test、Ignore 所注解的方法必须为 *public void*,而 BeforeClass、AfterClass 所注解的方法必须为 *public static void*
 ### 一个JUnit4的单元测试用例执行顺序为： 
 @BeforeClass -> @Before -> @Test -> @After -> @AfterClass; 
