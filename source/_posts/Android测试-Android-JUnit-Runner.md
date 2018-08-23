@@ -10,9 +10,9 @@ categories:
 ---
 ## Android JUnit Runner 介绍
 1. 是一个测试运行器，用于运行 Junit3 和 Junit4 的 Android 测试包 
-2. 替换 Instrumentation Test Runner（一个比较旧的测试运行器） 
-3. 支持 Instrumentation Test Runner 所有特性，但又进行了扩展 
-4. 保持了所有 Instrumentation Test Runner 的命令格式
+2. 替换 [Instrumentation Test Runner](https://developer.android.google.cn/reference/android/test/InstrumentationTestRunner)（一个比较旧的测试运行器） 
+3. 支持 [Instrumentation Test Runner](https://developer.android.google.cn/reference/android/test/InstrumentationTestRunner) 所有特性，但又进行了扩展 
+4. 保持了所有 [Instrumentation Test Runner](https://developer.android.google.cn/reference/android/test/InstrumentationTestRunner) 的命令格式
 
 ## 如何使用
 1. ### 首先需要在被测试 module 下的 `build.gradle` 导入如下依赖
