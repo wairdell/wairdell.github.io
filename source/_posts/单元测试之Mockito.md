@@ -16,7 +16,7 @@ categories:
 
 首先需要在 `build.gradle` 文件中添加相关依赖
 ```
-	testCompile "org.mockito:mockito-core:2.11.0"
+	testImplementation "org.mockito:mockito-core:2.11.0"
 	androidTestImplementation "org.mockito:mockito-android:2.11.0" //如果不做 android 的单元测试，则不需要依赖
 ```
 

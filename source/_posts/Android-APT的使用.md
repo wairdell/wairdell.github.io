@@ -13,7 +13,7 @@ categories:
 APT(Annotation Processing Tool)是一种处理注释的工具,它对源代码文件进行检测找出其中的 Annotation，根据注解自动生成代码。 Annotation 处理器在处理 Annotation 时可以根据源文件中的 Annotation 生成额外的源文件和其它的文件(文件具体内容由 Annotation 处理器的编写者决定),APT 还会编译生成的源文件和原来的源文件，将它们一起生成 class 文件。我们 Android 常用的库如 Dagger2, ButterKnife, EventBus3 等都使用了 APT 的技术。
 
 本篇通过一个简单的 Android 路由的项目来介绍 APT 相关内容和进行 APT 开发的大致流程。
-## 使用 APT 开发 Android 路由库
+## 使用 APT 开发自动生成路由表的库
 1. ### 首先我们创建一个名字为 route-annotation 的 module，定义 APT 需要处理的注解。
 ```java
 @Retention(RetentionPolicy.CLASS)
