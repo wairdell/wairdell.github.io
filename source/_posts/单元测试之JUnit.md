@@ -15,7 +15,7 @@ categories:
    ```   
    testCompile 'junit:junit:4.12'
    ```
-2. 打开你要测试的类右键，选择 Go To > Test，或者在 src/test/java 中新建类。再新建一个 public void 的方法，并使用注解（annotation）*@Test* 修饰。
+2. 打开你要测试的类右键，选择 Go To > Test，或者在 src/test/java 中新建类（被测试类和测试类一般在同一个包名下）。再新建一个 public void 的方法，并使用注解（annotation）`@Test` 修饰。
 	 ```java
 import org.junit.Test;
 
@@ -38,17 +38,17 @@ public class ExampleUnitTest {
 	```
 3. 右键新建的类，再弹出的菜单栏中选择 run。
 
-> JUnit 的测试环境是没有 android.jar，所以如果用到其中相关的类会报错。
+> JUnit 的测试环境时运行在本地 Java 虚拟机中的，android.jar 许多类需要得到 Android 系统的支持与初始化，所以如果用到其中相关的类可能会报错。
 
 ## JUnit 基本使用
 从 JUnit4 开始使用 Java5 中的注解（annotation），以下是 JUnit4 常用的几个 annotation： 
-- @Before：初始化方法   对于每一个测试方法都要执行一次（注意与 BeforeClass 区别，后者是对于所有方法执行一次）
-- @After：释放资源  对于每一个测试方法都要执行一次（注意与 AfterClass 区别，后者是对于所有方法执行一次）
-- @Test：测试方法，在这里可以测试期望异常和超时时间 
-- @Test (expected=ArithmeticException.class) 检查被测方法是否抛出 ArithmeticException 异常 
-- @Ignore：忽略的测试方法 
-- @BeforeClass：针对所有测试，只执行一次
-- @AfterClass：针对所有测试，只执行一次
+- `@Before`：初始化方法对于每一个测试方法都要执行一次（注意与 BeforeClass 区别，后者是对于所有方法执行一次）
+- `@After`：释放资源对于每一个测试方法都要执行一次（注意与 AfterClass 区别，后者是对于所有方法执行一次）
+- `@Test`：测试方法，在这里可以测试期望异常和超时时间 
+- `@Test(expected=ArithmeticException.class)` 检查被测方法是否抛出 ArithmeticException 异常 
+- `@Ignore`：忽略的测试方法 
+- `@BeforeClass`：针对所有测试，只执行一次
+- `@AfterClass`：针对所有测试，只执行一次
 
 > Before、After、Test、Ignore 所注解的方法必须为 *public void*,而 BeforeClass、AfterClass 所注解的方法必须为 *public static void*
 ### 一个JUnit4的单元测试用例执行顺序为： 

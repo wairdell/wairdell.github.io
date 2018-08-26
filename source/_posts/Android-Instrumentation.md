@@ -11,10 +11,13 @@ categories:
 我们先通过谷歌文档对 [Instrumentation](https://developer.android.google.cn/reference/android/app/Instrumentation) 的描述大致的了解下
 > Base class for implementing application instrumentation code. When running with instrumentation turned on, this class will be instantiated for you before any of the application code, allowing you to monitor all of the interaction the system has with the application. An Instrumentation implementation is described to the system through an AndroidManifest.xml's <instrumentation\> tag.
 
-翻译成中文的意思是：实现检测应用程序的基类，当 instrumentation 运行打开时，这个类将会在任何应用程序代码之前实例化，从而允许您监控系统与应用程序的所有交互。一个 Instrumentation 的实现需要在 AndroidMainfest.xml 文件的 <instrumentation\> 标签中定义。
+翻译成中文的意思是：实现检测应用程序的基类，当 instrumentation 运行打开时，这个类将会在任何应用程序代码之前实例化，从而允许您监控系统与应用程序的所有交互。一个 Instrumentation 的实现需要在 `AndroidMainfest.xml` 文件的 `<instrumentation>` 标签中定义。
 
 ## Instrumentation 能做些什么
-如绕过 Activity 需要在清单文件注册的校验
+- 进行测试
+Instrumentation 可以把测试包和目标测试应用加载到同一个进程中运行。既然各个控件和测试代码都运行在同一个进程中了，测试代码当然就可以调用这些控件的方法了，同时修改和验证这些控件的一些数据。已知的基于 Instrumentation 实现的测试库有 [Instrumentation Test Runner](https://developer.android.google.cn/reference/android/test/InstrumentationTestRunner) 和 [Android JUnit Runner](https://developer.android.google.cn/training/testing/junit-runner)
+- 进行 Hook
+Android 的应用中有许多操作（newActivity() ，startActivity()，callActivityOnCreate() 等）是通过 Instrumentation 实现的，我们可以通过反射技术替换应用中的 Instrumentation 变成自己的实现，来进行一些 hook 操作。如绕过 Activity 需要在清单文件注册的校验：
 ```java
 public class HookInstrumentation extends Instrumentation {
 

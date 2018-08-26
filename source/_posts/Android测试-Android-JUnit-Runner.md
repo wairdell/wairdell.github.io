@@ -46,5 +46,25 @@ categories:
 
 
 > Android JUnit Runner 是运行在 Android 的系统环境下，需要连接 Android 的真机或模拟器才能进行测试
+
+## AndroidJUnitRunner 和 Instrumentation 之间的关系
+如果阅读我过写过的另外一篇文章的应该知道 Instrumentation 在 Android 的系统中承担的一个十分重要角色（Instrumentation 可以把测试包和目标测试应用加载到同一个进程中运行），Instrumentation Test Runner 正是基于它才能实现的，可 AndroidJUnitRunner 好像没去实现 Instrumentation（我们创建的类不需要继承 Instrumentation 也没有在 `AndroidManifest` 的 `<instrumentation>` 声明），以下我们通过反编译手机上测试包的源码来了解下两则之前的关系。
+1. 通过包名找到手机上对应测试包文件的路径
+```
+adb shell pm path com.yeahka.android.pospay.mobile.test
+```
+2. 将手机上的安装包拉到电脑上
+```
+adb pull /data/app/com.yeahka.android.pospay.mobile.test-1/base.apk
+```
+3. 通过 apktool 反编译安装包，查看 `AndroidManifest.xml`
+```
+apktool -d base.apk
+```
+结果如下
+{% asset_img QQ20180826-162336.png %}
+
+我们找到 AndroidJUnitRunner 对应的源码，发现它也是 Instrumentation 的字类，通过这里我们可以知道 AndroidJUnitRunner 和 InstrumentationTestRunner 一样都是基于 Instrumentation 实现的测试库。
+
 ## 参考
 [1.Android JUnit Runner（使用AndroidStudio）](https://www.cnblogs.com/JianXu/p/5175945.html)

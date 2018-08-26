@@ -62,16 +62,23 @@ public class MainActivityTest {
 }
 ```
 
-写UI自动化测试用例，归结起来就是3步:
-* 定位View控件
-* 操作View控件
-* 校验View控件的状态
+写 UI 自动化测试用例，归结起来就是3步:
+* 定位 View 控件
+* 操作 View 控件
+* 校验 View 控件的状态
 
-对应Espresso，就是以下3个方法的调用：onView(ViewMatcher)、perform(ViewAction)、check(ViewAssertion)
+对应 Espresso，就是以下3个方法的调用：onView(ViewMatcher)、perform(ViewAction)、check(ViewAssertion)
 4. ### 运行测试类
 连接上真机或虚拟机，在编写完成的测试类中右键 run，或则点击测试方法左边的绿色三角形。运行的结果可以在底部查看，如下图。
 {% asset_img QQ20180819-183113.png %}
+## 所有的包说明
+- `espresso-core` 核心的包，对 View 的匹配，操作以及断言。 
+- [`espresso-web`](https://developer.android.com/training/testing/espresso/web.html) 提供对 WebView 测试的相关支持
+- [`espresso-idling-resource`](https://developer.android.com/training/testing/espresso/idling-resource.html) 与后台作业同步的机制
+- `espresso-contrib` 提供 DatePicker、RecyclerView 和 Drawer 操作、辅助功能检查 和 CountingIdlingResource 的支持
+- [`espresso-intents`](https://developer.android.com/training/testing/espresso/intents.html) 校验多app测试中intent的正确性
+- `espresso-remote` 不同进程功能
 
-> Espesso的运行是基于 SDK 的，要想运行一条用例必须在 Android 模拟器（或真机）上安装 App，启动 App，然后基于 UI 的操作来运行测试用例。
+> Espesso 的运行是基于 SDK 的，要想运行一条用例必须在 Android 模拟器（或真机）上安装 App，启动 App，然后基于 UI 的操作来运行测试用例。
 
 	
