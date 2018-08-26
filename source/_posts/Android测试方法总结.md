@@ -32,7 +32,7 @@ categories:
 	[MonkeyRunner](http://www.android-doc.com/tools/help/monkeyrunner_concepts.html) 工具是使用 Jython(使用 Java 编程语言实现的 Python)写出来的，它提供了多个 API，通过 monkeyrunner API 可以写一个 Python 的程序来模拟操作控制 Android 设备 app,测试其稳定性并通过截屏可以方便地记录出现的问题。依靠控件坐标进行定位控件。
 - #### Instrumentation 
 	Instrumentation 是 Android 主推的白盒测试框架。依靠控件的ID来进行定位的, 依赖于源码。
-- #### UIAutomator
+- #### UI Automator
 鉴于 Instrumentation 框架需要读懂项目源码、脚本开发难度较高并且不支持多应用交互，Android 官网亮出了自动化测试的王牌——UIAutomator，并主推这个自动化测试框架。该框架无需项目源码，脚本开发效率高且难度低，并且支持多应用的交互。UIAutomator 支持多应用的交互，弥补了 Instrumentation 工具的不足。但 UIAutomator 难以捕捉到控件的颜色、字体粗细、字号等信息，要验证该类信息的话，需要通过截图的方式进行半自动验证。同时，UIAutomator 的调试相比 Instrumentation 要困难。
 - #### Robotium
 Robotium 是一款国外的自动化测试框架，是一款免费的 Android UI 测试工具，主要针对 Android 平台的应用进行黑盒自动化测试，它提供了模拟各种手势操作（点击、长按、滑动等）、查找和断言机制的 API，能够对各种控件进行操作。 
