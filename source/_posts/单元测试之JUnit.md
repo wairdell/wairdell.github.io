@@ -21,24 +21,20 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
 public class ExampleUnitTest {
 
     //用 @Test 修饰的方法代表这是个测试方法
     @Test
-    public void addition_isCorrect() throws Exception {
-        //使用 org.junit.Assert 各种方法判断结果是否与预期一致，不一致则表示测试不通过
-        assertEquals(4, 2 + 3);
+    public void decodeToBCD() throws Exception {
+        byte[] data = new byte[]{0x22, 0x34}; //输入用例
+        int result = ByteUtils.decodeToBCD(data); //调用自己写的方法，将输入用例传入
+        assertEquals(result, 2234); //使用junit的断言方法，判断输出接口是否和预期接口一致
     }
 }
 	```
 3. 右键新建的类，再弹出的菜单栏中选择 run。
 
-> JUnit 的测试环境时运行在本地 Java 虚拟机中的，android.jar 许多类需要得到 Android 系统的支持与初始化，所以如果用到其中相关的类可能会报错。
+> JUnit 的测试环境时运行在本地 Java 虚拟机中的，是没有 android.jar 的依赖的，所以如果用到其中相关的类会报错。
 
 ## JUnit 基本使用
 从 JUnit4 开始使用 Java5 中的注解（annotation），以下是 JUnit4 常用的几个 annotation： 
@@ -46,6 +42,7 @@ public class ExampleUnitTest {
 - `@After`：释放资源对于每一个测试方法都要执行一次（注意与 AfterClass 区别，后者是对于所有方法执行一次）
 - `@Test`：测试方法，在这里可以测试期望异常和超时时间 
 - `@Test(expected=ArithmeticException.class)` 检查被测方法是否抛出 ArithmeticException 异常 
+- `@Test(timeout=1000)` 为测试用例指定超时时间
 - `@Ignore`：忽略的测试方法 
 - `@BeforeClass`：针对所有测试，只执行一次
 - `@AfterClass`：针对所有测试，只执行一次

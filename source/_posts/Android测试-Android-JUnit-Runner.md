@@ -64,7 +64,7 @@ apktool -d base.apk
 结果如下
 {% asset_img QQ20180826-162336.png %}
 
-我们找到 AndroidJUnitRunner 对应的源码，发现它也是 Instrumentation 的字类，通过这里我们可以知道 AndroidJUnitRunner 和 InstrumentationTestRunner 一样都是基于 Instrumentation 实现的测试库。
+我们找到 AndroidJUnitRunner 对应的源码，发现它也是 Instrumentation 的子类，通过这里我们可以知道 AndroidJUnitRunner 和 InstrumentationTestRunner 一样都是基于 Instrumentation 实现的测试库。
 
 ## 参考
 [1.Android JUnit Runner（使用AndroidStudio）](https://www.cnblogs.com/JianXu/p/5175945.html)

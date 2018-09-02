@@ -71,6 +71,42 @@ public class MainActivityTest {
 4. ### 运行测试类
 连接上真机或虚拟机，在编写完成的测试类中右键 run，或则点击测试方法左边的绿色三角形。运行的结果可以在底部查看，如下图。
 {% asset_img QQ20180819-183113.png %}
+
+## 相关 API 
+### 视图匹配
+利用Espresso.onView()方法，您可以访问目标应用中的 UI 组件并与之交互。此方法接受Matcher参数并搜索视图层次结构，以找到符合给定条件的相应View实例。您可以通过指定以下条件来优化搜索：
+- 视图的类名称 onView(withClassName());
+- 视图的内容描述 onView(withContentDescription());
+- 视图的ID onView(withId());
+- 在视图中显示的文本 onView(withText());
+
+更多的可以查看 [ViewMatchers](https://developer.android.google.cn/reference/android/support/test/espresso/matcher/ViewMatchers)。如果搜索成功，onView()方法将返回一个引用，让您可以执行用户操作并基于目标视图对断言进行测试。
+### 适配器匹配
+在 AdapterView 布局中，布局在运行时由子视图动态填充。如果目标视图位于某个布局内部，而该布局是从AdapterView（例如 ListView 或 GridView）派生出的子类，则 onView() 方法可能无法工作，因为只有布局视图的子集会加载到当前视图层次结构中。因此，需要使用 Espresso.onData() 方法访问目标视图元素。Espresso.onData() 方法将返回一个引用，让您可以执行用户操作并根据 AdapterView 中的元素对断言进行测试。
+```java
+//点击spinner
+onView(withId(R.id.spinner)).perform(click());
+//点击adpaterviewer中类型为String 并且内容为test的文本，
+onData(allOf(is(instanceOf(String.class)),is("test"))).perform(click());
+```
+### 操作API
+- `click()`：返回一个点击动作，Espresso利用这个方法执行一次点击操作,就和我们自己手动点击按钮一样。
+- `clearText()`：返回一个清除指定view中的文本action，在测试EditText时用的比较多。
+- `swipeLeft()`：返回一个从右往左滑动的action,这个在测试ViewPager时特别有用。
+- `swipeRight()`：返回一个从左往右滑动的action,这个在测试ViewPager时特别有用。
+- `swipeDown()`：返回一个从上往下滑动的action。
+- `swipeUp()`：返回一个从下往上滑动的action。
+- `closeSoftKeyboard()`：返回一个关闭输入键盘的action。
+- `pressBack()`：返回一个点击手机上返回键的action。
+- `doubleClick()`：返回一个双击action
+- `longClick()`：返回一个长按action
+### 校验结果
+- `doesNotExist`：断言某一个view不存在。
+- `matches`：断言某个view存在，且符合一列的匹配。
+- `selectedDescendentsMatch`：断言指定的子元素存在，且他们的状态符合一些列的匹配。
+
+
+
 ## 所有的包说明
 - `espresso-core` 核心的包，对 View 的匹配，操作以及断言。 
 - [`espresso-web`](https://developer.android.com/training/testing/espresso/web.html) 提供对 WebView 测试的相关支持
@@ -79,6 +115,6 @@ public class MainActivityTest {
 - [`espresso-intents`](https://developer.android.com/training/testing/espresso/intents.html) 校验多app测试中intent的正确性
 - `espresso-remote` 不同进程功能
 
-> Espesso 的运行是基于 SDK 的，要想运行一条用例必须在 Android 模拟器（或真机）上安装 App，启动 App，然后基于 UI 的操作来运行测试用例。
+> Espesso 的运行是基于 Android SDK 的，要想运行一条用例必须在 Android 模拟器（或真机）上安装 App，启动 App，然后基于 UI 的操作来运行测试用例。
 
 	
