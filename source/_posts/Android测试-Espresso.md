@@ -15,6 +15,7 @@ Espresso 是 Google 提供的 Android 自动化测试框架，属于 Android 测
 1. ### 在你要测试的 Module 的 gradle 文件里添加如下两个依赖:
 	```
 testCompile 'junit:junit:4.12'
+	```
 
 androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -117,4 +118,4 @@ onData(allOf(is(instanceOf(String.class)),is("test"))).perform(click());
 
 > Espesso 的运行是基于 Android SDK 的，要想运行一条用例必须在 Android 模拟器（或真机）上安装 App，启动 App，然后基于 UI 的操作来运行测试用例。
 
-	
+​	
