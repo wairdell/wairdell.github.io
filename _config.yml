@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://wairdell.com
+url: www.wairdell.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -74,9 +74,21 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: snippet
 
+baidu_url_submit: 
+  count: 5 ## 提交最新的五个链接
+  host: www.wairdell.com ## 百度站长平台中注册的域名
+  token: no6dZg0db1RGcOdj ## 准入秘钥
+  path: baidu_urls.txt ## 文本文档的地址， 新链接会保存在此文本文档里
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
+- type: git
   repo: https://github.com/wairdell/wairdell.github.io.git
   branch: master
+- type: baidu_url_submitter 
+
+sitemap: 
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
