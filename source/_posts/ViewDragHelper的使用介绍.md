@@ -27,6 +27,7 @@ public static ViewDragHelper create(@NonNull ViewGroup forParent, float sensitiv
 - clampViewPositionHorizontal 和 clampViewPositionVertical
   
     这两个方法都代表着用户对某个 view 有拖拽的动作，而返回值则决定了 view 的位置(通过返回值我们可以限制 view 拖拽的位置)。clampViewPositionHorizontal 代表着水平方法的拖拽，clampViewPositionVertical 代表着竖直方向的拖拽，它们都有三个参数：第一个 View 就是拖动的 View；第二个参数就是用户拖动到某个位置的值；第三个参数 dx 可以理解为滑动的速度，单位是 px 每秒。
+
 ```kotlin
 var callback = object : ViewDragHelper.Callback() {
 
@@ -117,7 +118,7 @@ class SimpleDragHelperView(context: Context, attrs: AttributeSet?) : FrameLayout
 - onEdgeDragStarted() ViewGroup 边缘的拖拽开始
 
 让我们用下来这个小例子来了解下上面这些方法的具体使用
-```
+```kotlin
 class TopDragHelperLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     companion object {

@@ -4,6 +4,10 @@ date: 2020-05-21 10:22:09
 tags:
 ---
 ### 需要重写的方法
+- fun generateDefaultLayoutParams(): RecyclerView.LayoutParams
+
+    这是唯一一个抽象方法，为 RecyclerView 的 ItemView 创建默认的 LayoutParams 对象。
+
 - fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State)
   
     需要填充整个 RecyclerView。需要回收之前所有的 ItemView,然后根据 RecyclerView 的可视范围将 ItemView add 进来
@@ -22,7 +26,6 @@ tags:
     水平滑动时调用，需要在这个方法内通过边界判断是否添加新的 ItemView 和回收 ItemView。dx 代表滑动的距离
 
 ### 需要调用的方法
-
 - fun detachAndScrapAttachedViews(recycler : Recycler)
 
     暂时分离并废弃所有当前附加的子视图。
