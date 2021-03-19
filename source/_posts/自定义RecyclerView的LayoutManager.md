@@ -2,6 +2,10 @@
 title: 自定义RecyclerView的LayoutManager
 date: 2020-05-21 10:22:09
 tags:
+- Android
+- RecyclerView
+categories:
+- 技术
 ---
 ### 需要重写的方法
 - fun generateDefaultLayoutParams(): RecyclerView.LayoutParams

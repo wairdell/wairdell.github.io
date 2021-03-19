@@ -2,6 +2,10 @@
 title: ViewDragHelper的使用介绍
 date: 2020-05-19 16:05:39
 tags:
+- Android
+- ViewDargHelper
+categories:
+- 技术
 ---
 ### ViewDargHelper 简介
 ViewDargHelper 是 Google 官方提供的工具类，使用它我们能轻松的在自己的自定 view 里实现拖拽相关的效果。

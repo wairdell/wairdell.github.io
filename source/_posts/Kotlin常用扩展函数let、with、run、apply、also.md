@@ -2,6 +2,9 @@
 title: Kotlin常用扩展函数let、with、run、apply、also
 date: 2020-04-22 11:32:40
 tags:
+- kotlin
+categories:
+- 技术
 ---
 ## 简介
 let、with、run、apply、also 这些函数都是方便对同一对象操作编码优化。例如我有一个数据结构如下的对象

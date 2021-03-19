@@ -2,13 +2,16 @@
 title: Kotlin笔记
 date: 2020-05-21 12:39:20
 tags:
+- kotlin
+categories:
+- 技术
 ---
-### 三目运算
+- ### 三目运算
 ```kotlin
 var result = if(a > b) a else b
 ```
 
-### for 循环
+- ### for 循环
 ```kotlin
 var start = 0
 var end = 10
@@ -41,7 +44,8 @@ for (i in start until end ) {
 //输出结果0 1 2 3 4 5 6 7 8 9 
 println()
 ```
-### 位运算
+- ### 位运算
+
 | 运算符       | 表示含义        |
 | --------    | :-----:         |
 | and(bits)   | 按位与          | 

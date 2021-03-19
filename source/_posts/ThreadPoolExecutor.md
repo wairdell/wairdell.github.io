@@ -2,6 +2,10 @@
 title: ThreadPoolExecutor
 date: 2020-05-26 23:02:05
 tags:
+- Java
+- 线程池
+categories:
+- 技术
 ---
 ### ThreadPoolExecutor
 ```
