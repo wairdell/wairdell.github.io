@@ -1,0 +1,482 @@
+<!DOCTYPE HTML>
+<html lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="wairdell的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="www.wairdell.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Android测试-Espresso | wairdell的个人博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="wairdell的个人博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?746dcd2c851012e681ba94afe86dfdb8";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='wairdell'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/技术/"><i class="fa "></i>技术</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/生活/"><i class="fa "></i>生活</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Android测试-Espresso">
+            
+	            Android测试-Espresso
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/技术">
+            技术
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Android" title='Android'>
+                        Android
+                    </a>
+                
+                    <a href="/tags/自动化测试" title='自动化测试'>
+                        自动化测试
+                    </a>
+                
+                    <a href="/tags/Espresso" title='Espresso'>
+                        Espresso
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/08/19</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>942</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="Espresso-介绍"><a href="#Espresso-介绍" class="headerlink" title="Espresso 介绍"></a>Espresso 介绍</h2><p>Espresso 是 Google 提供的 Android 自动化测试框架，属于 Android 测试支持库，主要用来进行 Android 界面(UI)相关的自动化测试。使用 Espresso 可以对 Activity 进行测试，还可以对一个 Activity 向另一个 Activity 发送的 Intent 进行测试。我们可以找到一个 UI 组件，对其实施 ViewAction，从而检查 UI 组件的行为是否正确。这一切不需要我们的手动操作，只需要简单的几行代码就能够实现。使用 Espresso 我们可以为应用的 UI 行为添加必要的测试，也可以实施 TDD（测试驱动开发）。</p>
+<h2 id="如何在-Android-Studio-中使用"><a href="#如何在-Android-Studio-中使用" class="headerlink" title="如何在 Android Studio 中使用"></a>如何在 Android Studio 中使用</h2><ol>
+<li><h3 id="在你要测试的-Module-的-gradle-文件里添加如下两个依赖"><a href="#在你要测试的-Module-的-gradle-文件里添加如下两个依赖" class="headerlink" title="在你要测试的 Module 的 gradle 文件里添加如下两个依赖:"></a>在你要测试的 Module 的 gradle 文件里添加如下两个依赖:</h3> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">testCompile &apos;junit:junit:4.12&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>androidTestCompile ‘com.android.support.test.espresso:espresso-core:2.2.2’, {<br>        exclude group: ‘com.android.support’, module: ‘support-annotations’<br>}<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">2. ### 创建测试类</span><br><span class="line">打开你要测试的类，右键 -&gt; Go To -&gt; Test 创建一个测试类（也可自己在 module\src\androidTest\java 目录下创建文件）</span><br><span class="line">3. ### 编写测试类</span><br><span class="line">在类中声明相应的注解，如下代码</span><br><span class="line">```java</span><br><span class="line">@RunWith(AndroidJUnit4.class)</span><br><span class="line">public class MainActivityTest &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 声明测试哪一个 Activity</span><br><span class="line">     */</span><br><span class="line">    @Rule</span><br><span class="line">    public ActivityTestRule mActivityRule = new ActivityTestRule(LoginActivity.class);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 用 @Test 声明这是个测试方法，一个类中可以声明多个测试方法</span><br><span class="line">     */</span><br><span class="line">    @Test</span><br><span class="line">    public void loginTestCase() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        //根据View的id和hint定位到输入登录账号的Editext，然后往里面输入账号 wairdell</span><br><span class="line">        onView(allOf(withId(R.id.et_input), withHint(&quot;请输入登入帐号&quot;))).perform(replaceText(&quot;wairdell&quot;));</span><br><span class="line"></span><br><span class="line">        //根据View的id和hint定位到输入登录密码的Editext 然后往里面输入账号 aaaaaa</span><br><span class="line">        onView(allOf(withId(R.id.et_input), withHint(&quot;请输入登入密码&quot;))).perform(replaceText(&quot;aaaaaa&quot;));</span><br><span class="line"></span><br><span class="line">        //根据View的id定位到Button,并检查Button的状态</span><br><span class="line">        onView(withId(R.id.btn_login)).check(matches(isEnabled()));</span><br><span class="line"></span><br><span class="line">        //根据View的id定位到Button, 模拟点击时间， 进行登陆</span><br><span class="line">        onView(withId(R.id.btn_login)).perform(click());</span><br><span class="line"></span><br><span class="line">        Repository repository = Repository.getInstance();</span><br><span class="line">        //判断是否登陆</span><br><span class="line">        assertEquals(repository.isLogin(), true);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>写 UI 自动化测试用例，归结起来就是3步:</p>
+<ul>
+<li>定位 View 控件</li>
+<li>操作 View 控件</li>
+<li>校验 View 控件的状态</li>
+</ul>
+<p>对应 Espresso，就是以下3个方法的调用：onView(ViewMatcher)、perform(ViewAction)、check(ViewAssertion)</p>
+<ol start="4">
+<li><h3 id="运行测试类"><a href="#运行测试类" class="headerlink" title="运行测试类"></a>运行测试类</h3>连接上真机或虚拟机，在编写完成的测试类中右键 run，或则点击测试方法左边的绿色三角形。运行的结果可以在底部查看，如下图。<img src="/2018/08/19/Android测试-Espresso/QQ20180819-183113.png">
+</li>
+</ol>
+<h2 id="相关-API"><a href="#相关-API" class="headerlink" title="相关 API"></a>相关 API</h2><h3 id="视图匹配"><a href="#视图匹配" class="headerlink" title="视图匹配"></a>视图匹配</h3><p>利用Espresso.onView()方法，您可以访问目标应用中的 UI 组件并与之交互。此方法接受Matcher参数并搜索视图层次结构，以找到符合给定条件的相应View实例。您可以通过指定以下条件来优化搜索：</p>
+<ul>
+<li>视图的类名称 onView(withClassName());</li>
+<li>视图的内容描述 onView(withContentDescription());</li>
+<li>视图的ID onView(withId());</li>
+<li>在视图中显示的文本 onView(withText());</li>
+</ul>
+<p>更多的可以查看 <a href="https://developer.android.google.cn/reference/android/support/test/espresso/matcher/ViewMatchers" target="_blank" rel="noopener">ViewMatchers</a>。如果搜索成功，onView()方法将返回一个引用，让您可以执行用户操作并基于目标视图对断言进行测试。</p>
+<h3 id="适配器匹配"><a href="#适配器匹配" class="headerlink" title="适配器匹配"></a>适配器匹配</h3><p>在 AdapterView 布局中，布局在运行时由子视图动态填充。如果目标视图位于某个布局内部，而该布局是从AdapterView（例如 ListView 或 GridView）派生出的子类，则 onView() 方法可能无法工作，因为只有布局视图的子集会加载到当前视图层次结构中。因此，需要使用 Espresso.onData() 方法访问目标视图元素。Espresso.onData() 方法将返回一个引用，让您可以执行用户操作并根据 AdapterView 中的元素对断言进行测试。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//点击spinner</span></span><br><span class="line">onView(withId(R.id.spinner)).perform(click());</span><br><span class="line"><span class="comment">//点击adpaterviewer中类型为String 并且内容为test的文本，</span></span><br><span class="line">onData(allOf(is(instanceOf(String.class)),is(<span class="string">"test"</span>))).perform(click());</span><br></pre></td></tr></table></figure></p>
+<h3 id="操作API"><a href="#操作API" class="headerlink" title="操作API"></a>操作API</h3><ul>
+<li><code>click()</code>：返回一个点击动作，Espresso利用这个方法执行一次点击操作,就和我们自己手动点击按钮一样。</li>
+<li><code>clearText()</code>：返回一个清除指定view中的文本action，在测试EditText时用的比较多。</li>
+<li><code>swipeLeft()</code>：返回一个从右往左滑动的action,这个在测试ViewPager时特别有用。</li>
+<li><code>swipeRight()</code>：返回一个从左往右滑动的action,这个在测试ViewPager时特别有用。</li>
+<li><code>swipeDown()</code>：返回一个从上往下滑动的action。</li>
+<li><code>swipeUp()</code>：返回一个从下往上滑动的action。</li>
+<li><code>closeSoftKeyboard()</code>：返回一个关闭输入键盘的action。</li>
+<li><code>pressBack()</code>：返回一个点击手机上返回键的action。</li>
+<li><code>doubleClick()</code>：返回一个双击action</li>
+<li><code>longClick()</code>：返回一个长按action<h3 id="校验结果"><a href="#校验结果" class="headerlink" title="校验结果"></a>校验结果</h3></li>
+<li><code>doesNotExist</code>：断言某一个view不存在。</li>
+<li><code>matches</code>：断言某个view存在，且符合一列的匹配。</li>
+<li><code>selectedDescendentsMatch</code>：断言指定的子元素存在，且他们的状态符合一些列的匹配。</li>
+</ul>
+<h2 id="所有的包说明"><a href="#所有的包说明" class="headerlink" title="所有的包说明"></a>所有的包说明</h2><ul>
+<li><code>espresso-core</code> 核心的包，对 View 的匹配，操作以及断言。 </li>
+<li><a href="https://developer.android.com/training/testing/espresso/web.html" target="_blank" rel="noopener"><code>espresso-web</code></a> 提供对 WebView 测试的相关支持</li>
+<li><a href="https://developer.android.com/training/testing/espresso/idling-resource.html" target="_blank" rel="noopener"><code>espresso-idling-resource</code></a> 与后台作业同步的机制</li>
+<li><code>espresso-contrib</code> 提供 DatePicker、RecyclerView 和 Drawer 操作、辅助功能检查 和 CountingIdlingResource 的支持</li>
+<li><a href="https://developer.android.com/training/testing/espresso/intents.html" target="_blank" rel="noopener"><code>espresso-intents</code></a> 校验多app测试中intent的正确性</li>
+<li><code>espresso-remote</code> 不同进程功能</li>
+</ul>
+<blockquote>
+<p>Espesso 的运行是基于 Android SDK 的，要想运行一条用例必须在 Android 模拟器（或真机）上安装 App，启动 App，然后基于 UI 的操作来运行测试用例。</p>
+</blockquote>
+<p>​    </p>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处  <a href="" target="_blank">©Wairdell</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/08/20/Android-APT的使用/" class="pre-post btn btn-default" title='Android APT的使用'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Android APT的使用</span>
+        </a>
+    
+    
+        <a href="/2018/03/20/单元测试之JUnit/" class="next-post btn btn-default" title='单元测试之JUnit'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">单元测试之JUnit</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zOTEwMC8xNTYyNw==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+    </div>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>主题Snippet v1.2.0版本已经上线！欢迎更新~ <br/>
+主题下载：<a href="https://github.com/shenliyang/hexo-theme-snippet" title="fork me" target="_blank">Snippet主题</a> <br/>
+<hr/>接受贡献，包括不限于提交问题与需求，修复代码。欢迎Pull Request<br/>支持主题：<a href="https://github.com/shenliyang/hexo-theme-snippet/stargazers">Star一下</a>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wairdell" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:wairdell@163.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Categories</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/"><i class="fa" aria-hidden="true">技术</i></a><span class="category-list-count">18</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">March 2021</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">June 2020</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/"><i class="fa" aria-hidden="true">May 2020</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">April 2020</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">May 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">August 2018</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">March 2018</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-JUnit-Runner/" style="font-size: 10px;">Android JUnit Runner</a> <a href="/tags/Apt/" style="font-size: 10px;">Apt</a> <a href="/tags/Espresso/" style="font-size: 10px;">Espresso</a> <a href="/tags/Instrumentation/" style="font-size: 10px;">Instrumentation</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/Monkey/" style="font-size: 10px;">Monkey</a> <a href="/tags/OkHttp/" style="font-size: 10px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 10px;">RecyclerView</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/Ui-Automator/" style="font-size: 10px;">Ui Automator</a> <a href="/tags/ViewDargHelper/" style="font-size: 10px;">ViewDargHelper</a> <a href="/tags/annotationProcessor/" style="font-size: 10px;">annotationProcessor</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kotlin/" style="font-size: 12.5px;">kotlin</a> <a href="/tags/ndk/" style="font-size: 10px;">ndk</a> <a href="/tags/单元测试/" style="font-size: 12.5px;">单元测试</a> <a href="/tags/注解处理器/" style="font-size: 10px;">注解处理器</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/源码/" style="font-size: 15px;">源码</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a> <a href="/tags/自动化测试/" style="font-size: 17.5px;">自动化测试</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.shenliyang.com" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE HTML>
+<html lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="wairdell的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="www.wairdell.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>自定义RecyclerView的LayoutManager | wairdell的个人博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="wairdell的个人博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?746dcd2c851012e681ba94afe86dfdb8";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='wairdell'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/技术/"><i class="fa "></i>技术</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/生活/"><i class="fa "></i>生活</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="自定义RecyclerView的LayoutManager">
+            
+	            自定义RecyclerView的LayoutManager
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/技术">
+            技术
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Android" title='Android'>
+                        Android
+                    </a>
+                
+                    <a href="/tags/RecyclerView" title='RecyclerView'>
+                        RecyclerView
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/05/21</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>302</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="需要重写的方法"><a href="#需要重写的方法" class="headerlink" title="需要重写的方法"></a>需要重写的方法</h3><ul>
+<li><p>fun generateDefaultLayoutParams(): RecyclerView.LayoutParams</p>
+<p>  这是唯一一个抽象方法，为 RecyclerView 的 ItemView 创建默认的 LayoutParams 对象。</p>
+</li>
+<li><p>fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State)</p>
+<p>  需要填充整个 RecyclerView。需要回收之前所有的 ItemView,然后根据 RecyclerView 的可视范围将 ItemView add 进来</p>
+</li>
+</ul>
+<ul>
+<li><p>fun canScrollHorizontally(): Boolean</p>
+<p>  这方法的返回值代表是否可以水平滑动</p>
+</li>
+<li><p>fun canScrollVertically(): Boolean </p>
+<p>  这个方法的返回值代表是否可以垂直滑动</p>
+</li>
+<li><p>fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State?): Int</p>
+<p>  水平滑动时调用，需要在这个方法内通过边界判断是否添加新的 ItemView 和回收 ItemView。dx 代表滑动的距离</p>
+</li>
+</ul>
+<h3 id="需要调用的方法"><a href="#需要调用的方法" class="headerlink" title="需要调用的方法"></a>需要调用的方法</h3><ul>
+<li><p>fun detachAndScrapAttachedViews(recycler : Recycler)</p>
+<p>  暂时分离并废弃所有当前附加的子视图。</p>
+</li>
+<li><p>fun measureChildWithMargins(child: View, widthUsed: int , heightUsed : int )</p>
+<p>  测量 View 的大小</p>
+</li>
+<li><p>fun getDecoratedMeasuredWidth(child: View) : Int</p>
+<p>  得到 View 测量后测量的宽度</p>
+</li>
+<li><p>fun getDecoratedMeasuredHeight(child: View) : Int</p>
+<p>  得到 View 测量后测量的高度</p>
+</li>
+<li><p>fun layoutDecorated(child: View, left,  top: Int, right: Int, bottom: Int)</p>
+<p>  在 RecyclerView 中布置给定的子视图，相当于给定子视图的位置</p>
+</li>
+<li><p>getChildAt(index: Int): View</p>
+<p> 根据索引得到当前 RecyclerView 中某个 ItemView</p>
+</li>
+<li><p>getPosition(view: View): Int</p>
+<p>  返回某个 ItemView 对应 adapter 的位置</p>
+</li>
+<li><p>removeAndRecycleView(view： View, recycler： recycler)</p>
+<p>  回收和移除某个 ItemView</p>
+</li>
+<li><p>addView(child: View)</p>
+<p>  将视图添加到 RecyclerView 中。</p>
+<h3 id="Recycler-中方法"><a href="#Recycler-中方法" class="headerlink" title="Recycler 中方法"></a>Recycler 中方法</h3></li>
+<li><p>getViewForPosition(position: Int): View</p>
+<p>  从缓存中拿到对应索引的 itemView，这个方法内部会先从 scrap 缓存中取 itemView，如果没有则从 recycler 缓存中取，如果还没有则调用 adapter 的 onCreateViewHolder() 去创建 itemView。</p>
+</li>
+</ul>
+<h4 id="下面是自定义实现水平布局的-LayoutManager，通过下面这个-Demo-我们可以大致了解一个自定义-LayoutManager-怎么写"><a href="#下面是自定义实现水平布局的-LayoutManager，通过下面这个-Demo-我们可以大致了解一个自定义-LayoutManager-怎么写" class="headerlink" title="下面是自定义实现水平布局的 LayoutManager，通过下面这个 Demo 我们可以大致了解一个自定义 LayoutManager 怎么写"></a>下面是自定义实现水平布局的 LayoutManager，通过下面这个 Demo 我们可以大致了解一个自定义 LayoutManager 怎么写</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.view.ViewGroup</span><br><span class="line"><span class="keyword">import</span> androidx.recyclerview.widget.RecyclerView</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleHorizontalLayoutManager</span> : <span class="type">RecyclerView.LayoutManager</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">generateDefaultLayoutParams</span><span class="params">()</span></span>: RecyclerView.LayoutParams &#123;</span><br><span class="line">        <span class="keyword">return</span> RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onLayoutChildren</span><span class="params">(recycler: <span class="type">RecyclerView</span>.<span class="type">Recycler</span>, state: <span class="type">RecyclerView</span>.<span class="type">State</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onLayoutChildren(recycler, state)</span><br><span class="line">        <span class="comment">//如果 itemCount 为0时没有任何 itemView 直接返回</span></span><br><span class="line">        <span class="keyword">if</span> (itemCount &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (state.isPreLayout) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//将现在Attached到RecyclerView的移除回收</span></span><br><span class="line">        detachAndScrapAttachedViews(recycler)</span><br><span class="line">        <span class="keyword">var</span> useWidth = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">0.</span>.itemCount) &#123;</span><br><span class="line">            <span class="comment">//获取某个position的itemView</span></span><br><span class="line">            <span class="keyword">val</span> childView = recycler.getViewForPosition(i)</span><br><span class="line">            <span class="comment">//添加进recyclerView</span></span><br><span class="line">            addView(childView)</span><br><span class="line">            <span class="comment">//测量itemView</span></span><br><span class="line">            measureChildWithMargins(childView, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">val</span> childViewWidth = getDecoratedMeasuredWidth(childView)</span><br><span class="line">            <span class="keyword">val</span> childViewHeight = getDecoratedMeasuredHeight(childView)</span><br><span class="line">            <span class="comment">//根据itemView测量的宽高布局</span></span><br><span class="line">            layoutDecorated(childView, useWidth, <span class="number">0</span>, useWidth + childViewWidth, childViewHeight)</span><br><span class="line">            useWidth += childViewWidth</span><br><span class="line">            <span class="comment">//如果itemView布局已超出recycleView的宽度就不在添加</span></span><br><span class="line">            <span class="keyword">if</span> (useWidth &gt;= width) &#123;</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">scrollHorizontallyBy</span><span class="params">(dx: <span class="type">Int</span>, recycler: <span class="type">RecyclerView</span>.<span class="type">Recycler</span>, state: <span class="type">RecyclerView</span>.<span class="type">State</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> resultDx = <span class="number">0</span></span><br><span class="line">        <span class="comment">//判断是左滑还是右滑,小于0是左滑</span></span><br><span class="line">        <span class="keyword">if</span> (dx &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//获取当前recyclerView中第一个itemView</span></span><br><span class="line">            <span class="keyword">var</span> childView = getChildAt(<span class="number">0</span>) ?: <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            <span class="keyword">var</span> childViewPosition = getPosition(childView)</span><br><span class="line">            <span class="comment">//如果第一itemView的position为0时，则没有前一个元素</span></span><br><span class="line">            <span class="keyword">if</span> (childViewPosition == <span class="number">0</span>) &#123;</span><br><span class="line">                resultDx = <span class="keyword">if</span> (childView.left &lt; <span class="number">0</span>) Math.max(childView.left, dx) <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (childView.left &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">//还在recycler的可以范围内不用加载</span></span><br><span class="line">                resultDx = dx</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//不为0，则有前一个元素，获取前一个位置的itemView</span></span><br><span class="line">                <span class="keyword">var</span> newChildView = recycler.getViewForPosition(childViewPosition - <span class="number">1</span>)</span><br><span class="line">                <span class="comment">//添加到recyclerView第一个位置</span></span><br><span class="line">                addView(newChildView, <span class="number">0</span>)</span><br><span class="line">                measureChildWithMargins(newChildView, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">var</span> newChildViewWidth = getDecoratedMeasuredWidth(newChildView)</span><br><span class="line">                <span class="keyword">var</span> newChildViewHeight = getDecoratedMeasuredHeight(newChildView)</span><br><span class="line">                <span class="comment">//根据新的itemView测量宽高将itemView布局到之前一个itemView的左边</span></span><br><span class="line">                layoutDecoratedWithMargins(</span><br><span class="line">                    newChildView,</span><br><span class="line">                    childView.left - newChildViewWidth,</span><br><span class="line">                    <span class="number">0</span>,</span><br><span class="line">                    childView.left,</span><br><span class="line">                    newChildViewHeight</span><br><span class="line">                )</span><br><span class="line">                resultDx = dx</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> childView = getChildAt(childCount - <span class="number">1</span>) ?: <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            <span class="keyword">var</span> childViewPosition = getPosition(childView)</span><br><span class="line">            <span class="comment">//如果第一itemView的position为最后一个，则没有下一个元素</span></span><br><span class="line">            <span class="keyword">if</span> (childViewPosition == itemCount - <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="comment">//限制最后一个滑动位置</span></span><br><span class="line">                resultDx = <span class="keyword">if</span>(childView.right &gt;= width) Math.min(childView.right - width, dx) <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (childView.right &gt;= width) &#123;</span><br><span class="line">                <span class="comment">//这里是如果可视范围还在RecyclerView内就不用加载下一个</span></span><br><span class="line">                resultDx = dx</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//不为最后一个，则有下一个元素，获取下一个位置的itemView</span></span><br><span class="line">                <span class="keyword">var</span> newChildView = recycler.getViewForPosition(childViewPosition + <span class="number">1</span>)</span><br><span class="line">                <span class="comment">//添加到recyclerView最后面</span></span><br><span class="line">                addView(newChildView)</span><br><span class="line">                measureChildWithMargins(newChildView, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">var</span> newChildViewWidth = getDecoratedMeasuredWidth(newChildView)</span><br><span class="line">                <span class="keyword">var</span> newChildViewHeight = getDecoratedMeasuredHeight(newChildView)</span><br><span class="line">                <span class="comment">//根据新的itemView测量宽高将itemView布局到之前一个itemView的右面</span></span><br><span class="line">                layoutDecoratedWithMargins(</span><br><span class="line">                    newChildView,</span><br><span class="line">                    childView.right,</span><br><span class="line">                    <span class="number">0</span>,</span><br><span class="line">                    childView.right + newChildViewWidth,</span><br><span class="line">                    newChildViewHeight</span><br><span class="line">                )</span><br><span class="line">                resultDx = dx</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        recyclerView(dx, recycler)</span><br><span class="line">        offsetChildrenHorizontal(-resultDx)</span><br><span class="line">        <span class="keyword">return</span> resultDx</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">recyclerView</span><span class="params">(dx: <span class="type">Int</span>, recycler: <span class="type">RecyclerView</span>.<span class="type">Recycler</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (dx &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">0.</span>.childCount) &#123;</span><br><span class="line">                <span class="keyword">var</span> childView = getChildAt(i) ?: <span class="keyword">continue</span></span><br><span class="line">                <span class="keyword">if</span> (childView.left &gt; width) &#123;</span><br><span class="line">                    removeAndRecycleView(childView, recycler)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">0.</span>.childCount) &#123;</span><br><span class="line">                <span class="keyword">var</span> childView = getChildAt(i) ?: <span class="keyword">continue</span></span><br><span class="line">                <span class="keyword">if</span>(childView.right &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                    removeAndRecycleView(childView, recycler)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//可以水平滑动</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">canScrollHorizontally</span><span class="params">()</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处  <a href="" target="_blank">©Wairdell</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2020/05/21/Kotlin笔记/" class="pre-post btn btn-default" title='Kotlin笔记'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Kotlin笔记</span>
+        </a>
+    
+    
+        <a href="/2020/05/19/ViewDragHelper的使用介绍/" class="next-post btn btn-default" title='ViewDragHelper的使用介绍'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">ViewDragHelper的使用介绍</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zOTEwMC8xNTYyNw==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+    </div>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>主题Snippet v1.2.0版本已经上线！欢迎更新~ <br/>
+主题下载：<a href="https://github.com/shenliyang/hexo-theme-snippet" title="fork me" target="_blank">Snippet主题</a> <br/>
+<hr/>接受贡献，包括不限于提交问题与需求，修复代码。欢迎Pull Request<br/>支持主题：<a href="https://github.com/shenliyang/hexo-theme-snippet/stargazers">Star一下</a>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wairdell" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:wairdell@163.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Categories</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/"><i class="fa" aria-hidden="true">技术</i></a><span class="category-list-count">18</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">March 2021</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">June 2020</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/"><i class="fa" aria-hidden="true">May 2020</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">April 2020</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">May 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">August 2018</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">March 2018</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-JUnit-Runner/" style="font-size: 10px;">Android JUnit Runner</a> <a href="/tags/Apt/" style="font-size: 10px;">Apt</a> <a href="/tags/Espresso/" style="font-size: 10px;">Espresso</a> <a href="/tags/Instrumentation/" style="font-size: 10px;">Instrumentation</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/Monkey/" style="font-size: 10px;">Monkey</a> <a href="/tags/OkHttp/" style="font-size: 10px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 10px;">RecyclerView</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/Ui-Automator/" style="font-size: 10px;">Ui Automator</a> <a href="/tags/ViewDargHelper/" style="font-size: 10px;">ViewDargHelper</a> <a href="/tags/annotationProcessor/" style="font-size: 10px;">annotationProcessor</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kotlin/" style="font-size: 12.5px;">kotlin</a> <a href="/tags/ndk/" style="font-size: 10px;">ndk</a> <a href="/tags/单元测试/" style="font-size: 12.5px;">单元测试</a> <a href="/tags/注解处理器/" style="font-size: 10px;">注解处理器</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/源码/" style="font-size: 15px;">源码</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a> <a href="/tags/自动化测试/" style="font-size: 17.5px;">自动化测试</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.shenliyang.com" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>

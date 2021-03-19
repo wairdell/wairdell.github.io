@@ -1,0 +1,446 @@
+<!DOCTYPE HTML>
+<html lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="wairdell的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="www.wairdell.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>ViewDragHelper的使用介绍 | wairdell的个人博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="wairdell的个人博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?746dcd2c851012e681ba94afe86dfdb8";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='wairdell'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/技术/"><i class="fa "></i>技术</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/生活/"><i class="fa "></i>生活</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="ViewDragHelper的使用介绍">
+            
+	            ViewDragHelper的使用介绍
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/技术">
+            技术
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Android" title='Android'>
+                        Android
+                    </a>
+                
+                    <a href="/tags/ViewDargHelper" title='ViewDargHelper'>
+                        ViewDargHelper
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/05/19</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>303</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="ViewDargHelper-简介"><a href="#ViewDargHelper-简介" class="headerlink" title="ViewDargHelper 简介"></a>ViewDargHelper 简介</h3><p>ViewDargHelper 是 Google 官方提供的工具类，使用它我们能轻松的在自己的自定 view 里实现拖拽相关的效果。</p>
+<h3 id="ViewDragHelper-的使用"><a href="#ViewDragHelper-的使用" class="headerlink" title="ViewDragHelper 的使用"></a>ViewDragHelper 的使用</h3><p>ViewDragHelper 实例需要使用它的静态方法 <code>create</code> 方法来创建。一般我们会用下面第一方法来创建，需要传入两个参数:一个是支持拖拽的 ViewGroup，另一个就是发生拖拽相关操作的回调处理对象 <code>ViewDragHelper.Callback</code>。还有一个多了一个参数 <code>sensitivity</code> 的重载方法，这个多出来的参数 <code>sensitivity</code> 代表拖拽的灵敏度，标准为1.0，数值越大，越灵敏。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewDragHelper <span class="title">create</span><span class="params">(@NonNull ViewGroup forParent, @NonNull Callback cb)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewDragHelper(forParent.getContext(), forParent, cb);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewDragHelper <span class="title">create</span><span class="params">(@NonNull ViewGroup forParent, <span class="keyword">float</span> sensitivity,</span></span></span><br><span class="line"><span class="function"><span class="params">            @NonNull Callback cb)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> ViewDragHelper helper = create(forParent, cb);</span><br><span class="line">        helper.mTouchSlop = (<span class="keyword">int</span>) (helper.mTouchSlop * (<span class="number">1</span> / sensitivity));</span><br><span class="line">        <span class="keyword">return</span> helper;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们看看 <code>ViewDragHelper.Callback</code> 最常用的以下三个方法，</p>
+<ul>
+<li>tryCaptureView<br>tryCaptureView 是唯一 <code>ViewDragHelper.Callback</code> 中唯一一个抽象方法，他的返回代表是否捕捉某个 view 的拖拽事件。返回 true 代表捕获，返回 false 则不捕获。只有捕获的 view 才能触发下面两个方法。</li>
+<li><p>clampViewPositionHorizontal 和 clampViewPositionVertical</p>
+<p>  这两个方法都代表着用户对某个 view 有拖拽的动作，而返回值则决定了 view 的位置(通过返回值我们可以限制 view 拖拽的位置)。clampViewPositionHorizontal 代表着水平方法的拖拽，clampViewPositionVertical 代表着竖直方向的拖拽，它们都有三个参数：第一个 View 就是拖动的 View；第二个参数就是用户拖动到某个位置的值；第三个参数 dx 可以理解为滑动的速度，单位是 px 每秒。</p>
+</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> callback = <span class="keyword">object</span> : ViewDragHelper.Callback() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">tryCaptureView</span><span class="params">(child: <span class="type">View</span>, pointerId: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"tryCaptureView() called with: child = [<span class="variable">$child</span>], pointerId = [<span class="variable">$pointerId</span>]"</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">clampViewPositionHorizontal</span><span class="params">(child: <span class="type">View</span>, left: <span class="type">Int</span>, dx: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"clampViewPositionHorizontal() called with: child = [<span class="variable">$child</span>], left = [<span class="variable">$left</span>], dx = [<span class="variable">$dx</span>]"</span>)</span><br><span class="line">                <span class="comment">//return super.clampViewPositionHorizontal(child, left, dx)</span></span><br><span class="line">                <span class="keyword">return</span> left</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">clampViewPositionVertical</span><span class="params">(child: <span class="type">View</span>, top: <span class="type">Int</span>, dy: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"clampViewPositionVertical() called with: child = [<span class="variable">$child</span>], top = [<span class="variable">$top</span>], dy = [<span class="variable">$dy</span>]"</span>)</span><br><span class="line">                <span class="keyword">return</span> top</span><br><span class="line">                <span class="comment">//return super.clampViewPositionVertical(child, top, dy)</span></span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们还需要在自己自定义的 ViewGroup 中把 touch 相关的事件交给 ViewDragHelper 处理。以下代码是一个 ViewGroup 里面所有的 child 都会根据用户的手指移动。我们用这个小例子来完整了解 ViewDragHelper 的简单使用<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleDragHelperView</span></span>(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> TAG = <span class="string">"SimpleDragHelperView"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> viewDragHelper : ViewDragHelper? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(context: Context) : <span class="keyword">this</span>(context, <span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        <span class="keyword">var</span> callback = <span class="keyword">object</span> : ViewDragHelper.Callback() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">tryCaptureView</span><span class="params">(child: <span class="type">View</span>, pointerId: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"tryCaptureView() called with: child = [<span class="variable">$child</span>], pointerId = [<span class="variable">$pointerId</span>]"</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">clampViewPositionHorizontal</span><span class="params">(child: <span class="type">View</span>, left: <span class="type">Int</span>, dx: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"clampViewPositionHorizontal() called with: child = [<span class="variable">$child</span>], left = [<span class="variable">$left</span>], dx = [<span class="variable">$dx</span>]"</span>)</span><br><span class="line">                <span class="comment">//return super.clampViewPositionHorizontal(child, left, dx)</span></span><br><span class="line">                <span class="keyword">return</span> left</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">clampViewPositionVertical</span><span class="params">(child: <span class="type">View</span>, top: <span class="type">Int</span>, dy: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"clampViewPositionVertical() called with: child = [<span class="variable">$child</span>], top = [<span class="variable">$top</span>], dy = [<span class="variable">$dy</span>]"</span>)</span><br><span class="line">                <span class="keyword">return</span> top</span><br><span class="line">                <span class="comment">//return super.clampViewPositionVertical(child, top, dy)</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onViewReleased</span><span class="params">(releasedChild: <span class="type">View</span>, xvel: <span class="type">Float</span>, yvel: <span class="type">Float</span>)</span></span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"onViewReleased() called with: releasedChild = [<span class="variable">$releasedChild</span>], xvel = [<span class="variable">$xvel</span>], yvel = [<span class="variable">$yvel</span>]"</span>)</span><br><span class="line">                <span class="keyword">super</span>.onViewReleased(releasedChild, xvel, yvel)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onEdgeDragStarted</span><span class="params">(edgeFlags: <span class="type">Int</span>, pointerId: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"onEdgeDragStarted() called with: edgeFlags = [<span class="variable">$edgeFlags</span>], pointerId = [<span class="variable">$pointerId</span>]"</span>)</span><br><span class="line">                <span class="keyword">super</span>.onEdgeDragStarted(edgeFlags, pointerId)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        viewDragHelper = ViewDragHelper.create(<span class="keyword">this</span>, callback)</span><br><span class="line">        viewDragHelper?.setEdgeTrackingEnabled(ViewDragHelper.EDGE_BOTTOM)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onInterceptTouchEvent</span><span class="params">(ev: <span class="type">MotionEvent</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> viewDragHelper?.shouldInterceptTouchEvent(ev) ?: <span class="keyword">super</span>.onInterceptTouchEvent(ev)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onTouchEvent</span><span class="params">(event: <span class="type">MotionEvent</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        viewDragHelper?.processTouchEvent(event)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="ViewDargHelper-中还有以下几个方法比较常用"><a href="#ViewDargHelper-中还有以下几个方法比较常用" class="headerlink" title="ViewDargHelper 中还有以下几个方法比较常用"></a>ViewDargHelper 中还有以下几个方法比较常用</h3><h4 id="DragHelperView-的方法"><a href="#DragHelperView-的方法" class="headerlink" title="DragHelperView 的方法"></a>DragHelperView 的方法</h4><ul>
+<li>setEdgeTrackingEnabled(int edgeFlags) 设置这个你就可以在 Callback 监听到 ViewGroup 边缘的滑动了。前面讲的都是手势选中了某个 ViewGroup 中子 view 产生的拖拽，但如果子 view 一开始不在 ViewGroup 可视范围内呢? 如 QQ 的侧滑菜单，这个时候就应该设置这个开关。</li>
+<li>captureChildView(@NonNull View childView, int activePointerId) 主动捕获 view 的拖拽</li>
+<li>settleCapturedViewAt(int finalLeft, int finalTop) 将捕获的视图放置在给定的位置（左，上）。需要我们重写 ViewGroup 的 computeScroll 方法主动调用 continueSettling 方法</li>
+</ul>
+<h4 id="DragHelperView-Callback-中的回调方法"><a href="#DragHelperView-Callback-中的回调方法" class="headerlink" title="DragHelperView.Callback 中的回调方法"></a>DragHelperView.Callback 中的回调方法</h4><ul>
+<li>onViewReleased() 这个是 View 释放拖拽的时候会回调</li>
+<li>onEdgeDragStarted() ViewGroup 边缘的拖拽开始</li>
+</ul>
+<p>让我们用下来这个小例子来了解下上面这些方法的具体使用<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TopDragHelperLayout</span></span>(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> TAG = <span class="string">"TopDragHelperLayout"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> viewDragHelper: ViewDragHelper? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> contentView: TextView? = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">var</span> topView: TextView? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        contentView = TextView(context)</span><br><span class="line">        addView(</span><br><span class="line">            contentView,</span><br><span class="line">            LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)</span><br><span class="line">        )</span><br><span class="line">        contentView?.setBackgroundColor(Color.parseColor(<span class="string">"#00FF00"</span>))</span><br><span class="line"></span><br><span class="line">        topView = TextView(context)</span><br><span class="line">        addView(</span><br><span class="line">            topView,</span><br><span class="line">            LayoutParams(</span><br><span class="line">                ViewGroup.LayoutParams.MATCH_PARENT,</span><br><span class="line">                <span class="number">300</span></span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">        topView?.setBackgroundColor(Color.parseColor(<span class="string">"#FF0000"</span>))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> helperCallback = <span class="keyword">object</span> : ViewDragHelper.Callback() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> currentTop: <span class="built_in">Int</span> = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">tryCaptureView</span><span class="params">(child: <span class="type">View</span>, pointerId: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"tryCaptureView() called with: child = [<span class="variable">$child</span>], pointerId = [<span class="variable">$pointerId</span>]"</span>)</span><br><span class="line">                <span class="keyword">return</span> child == topView</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">clampViewPositionVertical</span><span class="params">(child: <span class="type">View</span>, top: <span class="type">Int</span>, dy: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"clampViewPositionVertical() called with: child = [<span class="variable">$child</span>], top = [<span class="variable">$top</span>], dy = [<span class="variable">$dy</span>]"</span>)</span><br><span class="line">                currentTop = Math.min(<span class="number">0</span>, top)</span><br><span class="line">                <span class="keyword">return</span> currentTop</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onEdgeDragStarted</span><span class="params">(edgeFlags: <span class="type">Int</span>, pointerId: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"onEdgeDragStarted() called with: edgeFlags = [<span class="variable">$edgeFlags</span>], pointerId = [<span class="variable">$pointerId</span>]"</span>)</span><br><span class="line">                viewDragHelper?.captureChildView(topView!!, pointerId)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onViewReleased</span><span class="params">(releasedChild: <span class="type">View</span>, xvel: <span class="type">Float</span>, yvel: <span class="type">Float</span>)</span></span> &#123;</span><br><span class="line">                Log.d(</span><br><span class="line">                    TAG,</span><br><span class="line">                    <span class="string">"onViewReleased() called with: releasedChild = [<span class="variable">$releasedChild</span>], xvel = [<span class="variable">$xvel</span>], yvel = [<span class="variable">$yvel</span>]"</span></span><br><span class="line">                )</span><br><span class="line">                <span class="keyword">super</span>.onViewReleased(releasedChild, xvel, yvel)</span><br><span class="line">                topView?.also &#123;</span><br><span class="line">                    <span class="keyword">when</span> &#123;</span><br><span class="line">                        yvel &gt; <span class="number">300</span> -&gt; viewDragHelper?.settleCapturedViewAt(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">                        yvel &lt; <span class="number">-300</span> -&gt; viewDragHelper?.settleCapturedViewAt(<span class="number">0</span>, -it.measuredHeight)</span><br><span class="line">                        currentTop &gt; -it.measuredHeight / <span class="number">2</span> -&gt; viewDragHelper?.settleCapturedViewAt(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">                        <span class="keyword">else</span> -&gt; viewDragHelper?.settleCapturedViewAt(<span class="number">0</span>, -it.measuredHeight)</span><br><span class="line">                    &#125;</span><br><span class="line">                    invalidate()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        viewDragHelper = ViewDragHelper.create(<span class="keyword">this</span>, helperCallback)</span><br><span class="line">        viewDragHelper?.setEdgeTrackingEnabled(ViewDragHelper.EDGE_TOP)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onInterceptTouchEvent</span><span class="params">(ev: <span class="type">MotionEvent</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> viewDragHelper?.shouldInterceptTouchEvent(ev) ?: <span class="keyword">super</span>.onInterceptTouchEvent(ev)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onTouchEvent</span><span class="params">(event: <span class="type">MotionEvent</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        viewDragHelper?.processTouchEvent(event)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">computeScroll</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.computeScroll()</span><br><span class="line">        <span class="keyword">if</span> (viewDragHelper?.continueSettling(<span class="literal">true</span>) == <span class="literal">true</span>) &#123;</span><br><span class="line">            invalidate()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onLayout</span><span class="params">(changed: <span class="type">Boolean</span>, l: <span class="type">Int</span>, t: <span class="type">Int</span>, r: <span class="type">Int</span>, b: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        contentView?.run &#123;</span><br><span class="line">            layout(<span class="number">0</span>, <span class="number">0</span>, measuredWidth, measuredHeight)</span><br><span class="line">        &#125;</span><br><span class="line">        topView?.layout(<span class="number">0</span>, (topView?.measuredHeight ?: <span class="number">0</span>) * <span class="number">-1</span>, topView?.measuredWidth ?: <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处  <a href="" target="_blank">©Wairdell</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2020/05/21/自定义RecyclerView的LayoutManager/" class="pre-post btn btn-default" title='自定义RecyclerView的LayoutManager'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">自定义RecyclerView的LayoutManager</span>
+        </a>
+    
+    
+        <a href="/2020/04/22/Kotlin常用扩展函数let、with、run、apply、also/" class="next-post btn btn-default" title='Kotlin常用扩展函数let、with、run、apply、also'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Kotlin常用扩展函数let、with、run、apply、also</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zOTEwMC8xNTYyNw==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+    </div>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>主题Snippet v1.2.0版本已经上线！欢迎更新~ <br/>
+主题下载：<a href="https://github.com/shenliyang/hexo-theme-snippet" title="fork me" target="_blank">Snippet主题</a> <br/>
+<hr/>接受贡献，包括不限于提交问题与需求，修复代码。欢迎Pull Request<br/>支持主题：<a href="https://github.com/shenliyang/hexo-theme-snippet/stargazers">Star一下</a>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wairdell" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:wairdell@163.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Categories</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/"><i class="fa" aria-hidden="true">技术</i></a><span class="category-list-count">18</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/"><i class="fa" aria-hidden="true">March 2021</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/"><i class="fa" aria-hidden="true">June 2020</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/"><i class="fa" aria-hidden="true">May 2020</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/"><i class="fa" aria-hidden="true">April 2020</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/"><i class="fa" aria-hidden="true">May 2019</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/"><i class="fa" aria-hidden="true">August 2018</i></a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">March 2018</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-JUnit-Runner/" style="font-size: 10px;">Android JUnit Runner</a> <a href="/tags/Apt/" style="font-size: 10px;">Apt</a> <a href="/tags/Espresso/" style="font-size: 10px;">Espresso</a> <a href="/tags/Instrumentation/" style="font-size: 10px;">Instrumentation</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/Monkey/" style="font-size: 10px;">Monkey</a> <a href="/tags/OkHttp/" style="font-size: 10px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 10px;">RecyclerView</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/Ui-Automator/" style="font-size: 10px;">Ui Automator</a> <a href="/tags/ViewDargHelper/" style="font-size: 10px;">ViewDargHelper</a> <a href="/tags/annotationProcessor/" style="font-size: 10px;">annotationProcessor</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/kotlin/" style="font-size: 12.5px;">kotlin</a> <a href="/tags/ndk/" style="font-size: 10px;">ndk</a> <a href="/tags/单元测试/" style="font-size: 12.5px;">单元测试</a> <a href="/tags/注解处理器/" style="font-size: 10px;">注解处理器</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/源码/" style="font-size: 15px;">源码</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a> <a href="/tags/自动化测试/" style="font-size: 17.5px;">自动化测试</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.shenliyang.com" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>

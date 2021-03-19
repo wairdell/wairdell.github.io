@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>www.wairdell.com/2020/05/26/BlockingQueue/</loc>
+    
+    <lastmod>2021-03-19T04:09:06.283Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2020/05/26/ThreadPoolExecutor/</loc>
+    
+    <lastmod>2021-03-19T04:08:28.205Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2020/05/21/%E8%87%AA%E5%AE%9A%E4%B9%89RecyclerView%E7%9A%84LayoutManager/</loc>
+    
+    <lastmod>2021-03-19T04:07:56.006Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2020/05/19/ViewDragHelper%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/</loc>
+    
+    <lastmod>2021-03-19T04:07:09.965Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2020/04/22/Kotlin%E5%B8%B8%E7%94%A8%E6%89%A9%E5%B1%95%E5%87%BD%E6%95%B0let%E3%80%81with%E3%80%81run%E3%80%81apply%E3%80%81also/</loc>
+    
+    <lastmod>2021-03-19T04:06:43.520Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2020/05/21/Kotlin%E7%AC%94%E8%AE%B0/</loc>
+    
+    <lastmod>2021-03-19T04:06:38.083Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2020/06/12/RxJava%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    
+    <lastmod>2021-03-19T04:00:03.190Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2020/06/11/OkHttp%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</loc>
+    
+    <lastmod>2021-03-19T03:58:51.931Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2021/03/19/Android-%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E5%9B%BE%E7%89%87%E6%B1%87%E6%80%BB/</loc>
+    
+    <lastmod>2021-03-19T03:54:35.982Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2018/08/22/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B9%8BMockito/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.644Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2018/03/20/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B9%8BJUnit/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.643Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2019/05/23/ndk-build-%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.640Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2018/08/26/Android%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95-Ui-Automator/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.633Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2018/08/26/Android%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.631Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2018/08/21/Android%E6%B5%8B%E8%AF%95-Monkey/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.630Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2018/08/19/Android%E6%B5%8B%E8%AF%95-Espresso/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.627Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2018/08/23/Android-Instrumentation/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.625Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2018/08/23/Android%E6%B5%8B%E8%AF%95-Android-JUnit-Runner/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.625Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.wairdell.com/2018/08/20/Android-APT%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
+    
+    <lastmod>2021-03-19T03:27:50.623Z</lastmod>
+    
+  </url>
+  
+</urlset>
