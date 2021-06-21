@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Android测试-Espresso | wairdell的个人博客</title>
+<title>JNI学习笔记 | wairdell的个人博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="wairdell的个人博客" type="application/atom+xml">
@@ -140,9 +140,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Android测试-Espresso">
+        <h1 id="JNI学习笔记">
             
-	            Android测试-Espresso
+	            JNI学习笔记
             
         </h1>
         <div class="post-meta">
@@ -150,8 +150,8 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <a href="/categories/技术">
-            技术
+        <a href="/categories/ ">
+             
         </a>
     </span>
     
@@ -160,18 +160,6 @@
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
-                
-                    <a href="/tags/Android" title='Android'>
-                        Android
-                    </a>
-                
-                    <a href="/tags/Espresso" title='Espresso'>
-                        Espresso
-                    </a>
-                
-                    <a href="/tags/自动化测试" title='自动化测试'>
-                        自动化测试
-                    </a>
                 
             
         </span>
@@ -182,73 +170,225 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2018/08/19</span>
+            <span class="date-meta">2021/04/12</span>
         </span>
     
 </div>
 
             
             
-            <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>1036</strong>天之前发表，文中内容可能已经过时。
-            </p>
-        
     </div>
     
     <div class="post-body post-content">
-        <h2 id="Espresso-介绍"><a href="#Espresso-介绍" class="headerlink" title="Espresso 介绍"></a>Espresso 介绍</h2><p>Espresso 是 Google 提供的 Android 自动化测试框架，属于 Android 测试支持库，主要用来进行 Android 界面(UI)相关的自动化测试。使用 Espresso 可以对 Activity 进行测试，还可以对一个 Activity 向另一个 Activity 发送的 Intent 进行测试。我们可以找到一个 UI 组件，对其实施 ViewAction，从而检查 UI 组件的行为是否正确。这一切不需要我们的手动操作，只需要简单的几行代码就能够实现。使用 Espresso 我们可以为应用的 UI 行为添加必要的测试，也可以实施 TDD（测试驱动开发）。</p>
-<h2 id="如何在-Android-Studio-中使用"><a href="#如何在-Android-Studio-中使用" class="headerlink" title="如何在 Android Studio 中使用"></a>如何在 Android Studio 中使用</h2><ol>
-<li><h3 id="在你要测试的-Module-的-gradle-文件里添加如下两个依赖"><a href="#在你要测试的-Module-的-gradle-文件里添加如下两个依赖" class="headerlink" title="在你要测试的 Module 的 gradle 文件里添加如下两个依赖:"></a>在你要测试的 Module 的 gradle 文件里添加如下两个依赖:</h3> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">testCompile &apos;junit:junit:4.12&apos;</span><br></pre></td></tr></table></figure>
+        <h2 id="两种注册方式"><a href="#两种注册方式" class="headerlink" title="两种注册方式"></a>两种注册方式</h2><ol>
+<li><h3 id="静态注册"><a href="#静态注册" class="headerlink" title="静态注册"></a>静态注册</h3><p> 静态方式就是根据函数名来建立 Java 函数和 JNI 函数之间的关联关系。可以使用 Java 的工具程序 javah 生成</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javah -o output packageName.className</span><br></pre></td></tr></table></figure>
+<p> 如下的 java 类声明的 native 方法</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.wairdell;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">void</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> num1, <span class="keyword">int</span> mum2)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 对应的 JNI 函数是</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jint <span class="title">Java_com_wairdell_Demo_sum</span><span class="params">(JNIEnv *env, jobject thiz, jint num1, jint num2)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="动态注册"><a href="#动态注册" class="headerlink" title="动态注册"></a>动态注册</h3><p> Java native 函数和 JNI 函数是一一对应的。在 JNI 技术中，使用 <code>JNINativeMethod</code> 结构来记录这种一一对应的关系。</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="comment">//Java中native函数的名字，不用携带包的路径，例如“native_init”。</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* name;</span><br><span class="line">    <span class="comment">//Java函数的签名信息，用字符串表示，是参数类型和返回值类型的组合。</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* signature;</span><br><span class="line">    <span class="comment">//JNI层对应函数的函数指针，注意它是void*类型。</span></span><br><span class="line">    <span class="keyword">void</span>* fnPtrl;</span><br><span class="line">&#125; JNINativeMethod;</span><br></pre></td></tr></table></figure>
+<p> 可是使用下面方法进行注册</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">JNINativeMethod gMethods[] &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"sum"</span>,<span class="comment">//Java 中 native 函数的函数名。</span></span><br><span class="line">        <span class="string">"(II)I"</span>,<span class="comment">//native的签名信息，</span></span><br><span class="line">        (<span class="keyword">void</span>*)Java_com_wairdell_Demo_sum <span class="comment">//JNI层对应的函数指针。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">AndroidRuntime:<span class="keyword">register</span>(env, <span class="string">"com/wairdell/Demo"</span>, gMethods, NELEM(gMethods));</span><br></pre></td></tr></table></figure>
+<p> <code>AndroidRunTime.cpp</code></p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> AndroidRuntime:registerNativeMethods(JNIEnv* env, <span class="keyword">const</span> <span class="keyword">char</span>* className, <span class="keyword">const</span> JNINativeMethod* gMethods, <span class="keyword">int</span> numMethods) &#123;</span><br><span class="line">    <span class="keyword">return</span> jniRegisterNativeMethods(env, className, gMethods);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> <code>JNIHelp.c</code></p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">jniRegisterNativeMethods</span><span class="params">(JNIEnv *env, <span class="keyword">const</span> <span class="keyword">char</span>* className, <span class="keyword">const</span> JNINativeMethod* gmethods, <span class="keyword">int</span> numMethods)</span> </span>&#123;</span><br><span class="line">    jclass clazz;</span><br><span class="line">    clazz = (*env)-&gt;FindClass(env, className);</span><br><span class="line">    <span class="keyword">if</span>((*env)-&gt;RegisterNatives(env, clazz, gMethods, numMethods) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 注册时机：当 Java 层通过 System.loadLibrary 加载完 JNI 动态库后，紧接着会查找该库中一个叫 JNI_OnLoad 的函数。如果有，就调用它，而动态注册的工作就是在这里完成的。</p>
 </li>
 </ol>
-<p>androidTestCompile ‘com.android.support.test.espresso:espresso-core:2.2.2’, {<br>        exclude group: ‘com.android.support’, module: ‘support-annotations’<br>}<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">2. ### 创建测试类</span><br><span class="line">打开你要测试的类，右键 -&gt; Go To -&gt; Test 创建一个测试类（也可自己在 module\src\androidTest\java 目录下创建文件）</span><br><span class="line">3. ### 编写测试类</span><br><span class="line">在类中声明相应的注解，如下代码</span><br><span class="line">```java</span><br><span class="line">@RunWith(AndroidJUnit4.class)</span><br><span class="line">public class MainActivityTest &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 声明测试哪一个 Activity</span><br><span class="line">     */</span><br><span class="line">    @Rule</span><br><span class="line">    public ActivityTestRule mActivityRule = new ActivityTestRule(LoginActivity.class);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 用 @Test 声明这是个测试方法，一个类中可以声明多个测试方法</span><br><span class="line">     */</span><br><span class="line">    @Test</span><br><span class="line">    public void loginTestCase() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        //根据View的id和hint定位到输入登录账号的Editext，然后往里面输入账号 wairdell</span><br><span class="line">        onView(allOf(withId(R.id.et_input), withHint(&quot;请输入登入帐号&quot;))).perform(replaceText(&quot;wairdell&quot;));</span><br><span class="line"></span><br><span class="line">        //根据View的id和hint定位到输入登录密码的Editext 然后往里面输入账号 aaaaaa</span><br><span class="line">        onView(allOf(withId(R.id.et_input), withHint(&quot;请输入登入密码&quot;))).perform(replaceText(&quot;aaaaaa&quot;));</span><br><span class="line"></span><br><span class="line">        //根据View的id定位到Button,并检查Button的状态</span><br><span class="line">        onView(withId(R.id.btn_login)).check(matches(isEnabled()));</span><br><span class="line"></span><br><span class="line">        //根据View的id定位到Button, 模拟点击时间， 进行登陆</span><br><span class="line">        onView(withId(R.id.btn_login)).perform(click());</span><br><span class="line"></span><br><span class="line">        Repository repository = Repository.getInstance();</span><br><span class="line">        //判断是否登陆</span><br><span class="line">        assertEquals(repository.isLogin(), true);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>写 UI 自动化测试用例，归结起来就是3步:</p>
-<ul>
-<li>定位 View 控件</li>
-<li>操作 View 控件</li>
-<li>校验 View 控件的状态</li>
-</ul>
-<p>对应 Espresso，就是以下3个方法的调用：onView(ViewMatcher)、perform(ViewAction)、check(ViewAssertion)</p>
-<ol start="4">
-<li><h3 id="运行测试类"><a href="#运行测试类" class="headerlink" title="运行测试类"></a>运行测试类</h3>连接上真机或虚拟机，在编写完成的测试类中右键 run，或则点击测试方法左边的绿色三角形。运行的结果可以在底部查看，如下图。<img src="/2018/08/19/Android测试-Espresso/QQ20180819-183113.png">
-</li>
-</ol>
-<h2 id="相关-API"><a href="#相关-API" class="headerlink" title="相关 API"></a>相关 API</h2><h3 id="视图匹配"><a href="#视图匹配" class="headerlink" title="视图匹配"></a>视图匹配</h3><p>利用Espresso.onView()方法，您可以访问目标应用中的 UI 组件并与之交互。此方法接受Matcher参数并搜索视图层次结构，以找到符合给定条件的相应View实例。您可以通过指定以下条件来优化搜索：</p>
-<ul>
-<li>视图的类名称 onView(withClassName());</li>
-<li>视图的内容描述 onView(withContentDescription());</li>
-<li>视图的ID onView(withId());</li>
-<li>在视图中显示的文本 onView(withText());</li>
-</ul>
-<p>更多的可以查看 <a href="https://developer.android.google.cn/reference/android/support/test/espresso/matcher/ViewMatchers" target="_blank" rel="noopener">ViewMatchers</a>。如果搜索成功，onView()方法将返回一个引用，让您可以执行用户操作并基于目标视图对断言进行测试。</p>
-<h3 id="适配器匹配"><a href="#适配器匹配" class="headerlink" title="适配器匹配"></a>适配器匹配</h3><p>在 AdapterView 布局中，布局在运行时由子视图动态填充。如果目标视图位于某个布局内部，而该布局是从AdapterView（例如 ListView 或 GridView）派生出的子类，则 onView() 方法可能无法工作，因为只有布局视图的子集会加载到当前视图层次结构中。因此，需要使用 Espresso.onData() 方法访问目标视图元素。Espresso.onData() 方法将返回一个引用，让您可以执行用户操作并根据 AdapterView 中的元素对断言进行测试。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//点击spinner</span></span><br><span class="line">onView(withId(R.id.spinner)).perform(click());</span><br><span class="line"><span class="comment">//点击adpaterviewer中类型为String 并且内容为test的文本，</span></span><br><span class="line">onData(allOf(is(instanceOf(String.class)),is(<span class="string">"test"</span>))).perform(click());</span><br></pre></td></tr></table></figure></p>
-<h3 id="操作API"><a href="#操作API" class="headerlink" title="操作API"></a>操作API</h3><ul>
-<li><code>click()</code>：返回一个点击动作，Espresso利用这个方法执行一次点击操作,就和我们自己手动点击按钮一样。</li>
-<li><code>clearText()</code>：返回一个清除指定view中的文本action，在测试EditText时用的比较多。</li>
-<li><code>swipeLeft()</code>：返回一个从右往左滑动的action,这个在测试ViewPager时特别有用。</li>
-<li><code>swipeRight()</code>：返回一个从左往右滑动的action,这个在测试ViewPager时特别有用。</li>
-<li><code>swipeDown()</code>：返回一个从上往下滑动的action。</li>
-<li><code>swipeUp()</code>：返回一个从下往上滑动的action。</li>
-<li><code>closeSoftKeyboard()</code>：返回一个关闭输入键盘的action。</li>
-<li><code>pressBack()</code>：返回一个点击手机上返回键的action。</li>
-<li><code>doubleClick()</code>：返回一个双击action</li>
-<li><code>longClick()</code>：返回一个长按action<h3 id="校验结果"><a href="#校验结果" class="headerlink" title="校验结果"></a>校验结果</h3></li>
-<li><code>doesNotExist</code>：断言某一个view不存在。</li>
-<li><code>matches</code>：断言某个view存在，且符合一列的匹配。</li>
-<li><code>selectedDescendentsMatch</code>：断言指定的子元素存在，且他们的状态符合一些列的匹配。</li>
-</ul>
-<h2 id="所有的包说明"><a href="#所有的包说明" class="headerlink" title="所有的包说明"></a>所有的包说明</h2><ul>
-<li><code>espresso-core</code> 核心的包，对 View 的匹配，操作以及断言。 </li>
-<li><a href="https://developer.android.com/training/testing/espresso/web.html" target="_blank" rel="noopener"><code>espresso-web</code></a> 提供对 WebView 测试的相关支持</li>
-<li><a href="https://developer.android.com/training/testing/espresso/idling-resource.html" target="_blank" rel="noopener"><code>espresso-idling-resource</code></a> 与后台作业同步的机制</li>
-<li><code>espresso-contrib</code> 提供 DatePicker、RecyclerView 和 Drawer 操作、辅助功能检查 和 CountingIdlingResource 的支持</li>
-<li><a href="https://developer.android.com/training/testing/espresso/intents.html" target="_blank" rel="noopener"><code>espresso-intents</code></a> 校验多app测试中intent的正确性</li>
-<li><code>espresso-remote</code> 不同进程功能</li>
-</ul>
+<h2 id="基本数据类型的转换表"><a href="#基本数据类型的转换表" class="headerlink" title="基本数据类型的转换表"></a>基本数据类型的转换表</h2><table>
+<thead>
+<tr>
+<th>Java</th>
+<th>Native类型</th>
+<th>符号属性</th>
+<th>字长</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolean</td>
+<td>jboolean</td>
+<td>无符号</td>
+<td>8位</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>jbyte</td>
+<td>无符号</td>
+<td>8位</td>
+</tr>
+<tr>
+<td>char</td>
+<td>jchar</td>
+<td>无符号</td>
+<td>16位</td>
+</tr>
+<tr>
+<td>short</td>
+<td>jshort</td>
+<td>有符号</td>
+<td>16位</td>
+</tr>
+<tr>
+<td>int</td>
+<td>jint</td>
+<td>有符号</td>
+<td>32位</td>
+</tr>
+<tr>
+<td>long</td>
+<td>jlong</td>
+<td>有符号</td>
+<td>64位</td>
+</tr>
+<tr>
+<td>float</td>
+<td>jfloat</td>
+<td>有符号</td>
+<td>32位</td>
+</tr>
+<tr>
+<td>double</td>
+<td>jdouble</td>
+<td>有符号</td>
+<td>64位</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Java-引用数据类型转化关系表"><a href="#Java-引用数据类型转化关系表" class="headerlink" title="Java 引用数据类型转化关系表"></a>Java 引用数据类型转化关系表</h2><table>
+<thead>
+<tr>
+<th>java引用类型</th>
+<th>Native类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All objects</td>
+<td>jobject</td>
+</tr>
+<tr>
+<td>Class 类型</td>
+<td>jclass</td>
+</tr>
+<tr>
+<td>String 类型</td>
+<td>jstring</td>
+</tr>
+<tr>
+<td>Object[]</td>
+<td>jobjectArray</td>
+</tr>
+<tr>
+<td>Throwable 类型</td>
+<td>jthrowable</td>
+</tr>
+<tr>
+<td>int[]</td>
+<td>jintArray</td>
+</tr>
+<tr>
+<td>short[]</td>
+<td>jshortArray</td>
+</tr>
+<tr>
+<td>long[]</td>
+<td>jlongArray</td>
+</tr>
+<tr>
+<td>float[]</td>
+<td>floatArray</td>
+</tr>
+<tr>
+<td>double[]</td>
+<td>jdoubleArray</td>
+</tr>
+<tr>
+<td>byte[]</td>
+<td>jbyteArray</td>
+</tr>
+<tr>
+<td>boolean[]</td>
+<td>jbooleanArray</td>
+</tr>
+</tbody>
+</table>
+<h2 id="JNIEnv介绍"><a href="#JNIEnv介绍" class="headerlink" title="JNIEnv介绍"></a>JNIEnv介绍</h2><p>JNIEnv是一个与线程相关的代表JNI环境的结构体。JNIEnv 在每个线程都是不同实例。调用JavaVM的AttachCurrentThread函数，就可得到这个线程的JNIEnv结构体,在线程退出前，需要调用JavaVM的DetachCurrentThread函数来释放对应的资源。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//全进程只有一个JavaVM对象，所以可以保存，并且在任何地方使用都没有问题。</span><br><span class="line">jint JNI_OnLoad（JavaVM*vm,void*reserved）</span><br><span class="line">``` </span><br><span class="line">使用 JNIEnv 可以让 native 调用 java 的代码。大概的使用方式先用`jfieldID GetFieldID(jclass clazz, char* name, char* sig)` 和 `jmethodID GetMethodID(jclass clazz, const char* name, const char* sig)` 来获取类的成员函数和成员变量信息。使用类似 `CallVoidMethod(Call＜type＞Method)` 的函数调用 java 方法，使用类似 `GetIntField(Get＜type＞Field)` 的函数访问 java 的字段。</span><br><span class="line"></span><br><span class="line">#### Java String 对象转成本地字符串</span><br><span class="line">```C</span><br><span class="line">env-&gt;GetStringChars()</span><br><span class="line">env-&gt;GetStringUTFChars()</span><br></pre></td></tr></table></figure></p>
+<h4 id="本地字符串转成-Java-String-对象"><a href="#本地字符串转成-Java-String-对象" class="headerlink" title="本地字符串转成 Java String 对象"></a>本地字符串转成 Java String 对象</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">env-&gt;NewString()</span><br><span class="line">env-&gt;NewStringUTF()</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>Espesso 的运行是基于 Android SDK 的，要想运行一条用例必须在 Android 模拟器（或真机）上安装 App，启动 App，然后基于 UI 的操作来运行测试用例。</p>
+<p>Note:  记得调用 <code>ReleaseStringChars</code> 和 <code>ReleaseStringUTFChars</code> 函数来释放资源</p>
 </blockquote>
-<p>​    </p>
+<h2 id="类型标识示意表"><a href="#类型标识示意表" class="headerlink" title="类型标识示意表"></a>类型标识示意表</h2><table>
+<thead>
+<tr>
+<th>类型标识</th>
+<th>Java类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V</td>
+<td>void</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>B</td>
+<td>byte</td>
+</tr>
+<tr>
+<td>S</td>
+<td>short</td>
+</tr>
+<tr>
+<td>I</td>
+<td>int</td>
+</tr>
+<tr>
+<td>J</td>
+<td>long</td>
+</tr>
+<tr>
+<td>F</td>
+<td>float</td>
+</tr>
+<tr>
+<td>D</td>
+<td>double</td>
+</tr>
+<tr>
+<td>L/java/lang/String;</td>
+<td>String</td>
+</tr>
+<tr>
+<td>[I</td>
+<td>int[]</td>
+</tr>
+<tr>
+<td>[L/java/lang/Object;</td>
+<td>Object[]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="引用方式"><a href="#引用方式" class="headerlink" title="引用方式"></a>引用方式</h3><ul>
+<li><code>Local Reference</code>:本地引用。在JNI层函数中使用的非全局引用对象都是Local Reference，它包括函数调用时传入的jobject和在JNI层函数中创建的jobject。Local Reference最大的特点就是，一旦JNI层函数返回，这些jobject就可能被垃圾回收。</li>
+<li><code>Global Reference</code>:全局引用，这种对象如不主动释放，它永远不会被垃圾回收。</li>
+<li><code>Weak Global Reference</code>:弱全局引用，一种特殊的Global Reference，在运行过程中可能会被垃圾回收。所以在使用它之前，需要调用 JNIEnv 的 IsSameObject 判断它是否被回收了。<blockquote>
+<p>Note: <code>DeleteGlobalRef</code> 和 <code>DeleteLocalRef</code> 释放对应对象</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="JNI层函数可以在代码中截获和修改这些异常，JNIEnv提供了三个函数给予帮助："><a href="#JNI层函数可以在代码中截获和修改这些异常，JNIEnv提供了三个函数给予帮助：" class="headerlink" title="JNI层函数可以在代码中截获和修改这些异常，JNIEnv提供了三个函数给予帮助："></a>JNI层函数可以在代码中截获和修改这些异常，JNIEnv提供了三个函数给予帮助：</h3><ul>
+<li><code>ExceptionOccured</code> 函数，用来判断是否发生异常。</li>
+<li><code>ExceptionClear</code> 函数，用来清理当前JNI层中发生的异常。</li>
+<li><code>ThrowNew</code> 函数，用来向Java层抛出异常。</li>
+</ul>
 
     </div>
 
@@ -266,15 +406,15 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2018/08/20/Android-APT的使用/" class="pre-post btn btn-default" title='Android APT的使用'>
+        <a href="/2021/04/12/Zygote学习笔记/" class="pre-post btn btn-default" title='Zygote学习笔记'>
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">Android APT的使用</span>
+            <span class="hidden-xs">Zygote学习笔记</span>
         </a>
     
     
-        <a href="/2018/03/20/单元测试之JUnit/" class="next-post btn btn-default" title='单元测试之JUnit'>
+        <a href="/2021/03/19/Android-相关知识图片汇总/" class="next-post btn btn-default" title='Android 相关知识图片汇总'>
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">单元测试之JUnit</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">Android 相关知识图片汇总</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>

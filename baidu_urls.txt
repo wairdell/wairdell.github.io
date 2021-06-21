@@ -1,5 +1,5 @@
-www.wairdell.com/2021/03/19/Android-相关知识图片汇总/
-www.wairdell.com/2020/06/12/RxJava源码解析（一）/
-www.wairdell.com/2020/06/11/OkHttp源码分析/
-www.wairdell.com/2020/05/26/ThreadPoolExecutor/
-www.wairdell.com/2020/05/26/BlockingQueue/
+http://yoursite.com/2021/04/12/Zygote学习笔记/
+http://yoursite.com/2021/04/12/JNI学习笔记/
+http://yoursite.com/2021/03/19/Android-相关知识图片汇总/
+http://yoursite.com/2020/06/12/RxJava源码解析（一）/
+http://yoursite.com/2020/06/11/OkHttp源码分析/

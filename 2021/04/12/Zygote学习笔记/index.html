@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Tag: Android JUnit Runner | wairdell的个人博客</title>
+<title>Zygote学习笔记 | wairdell的个人博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="wairdell的个人博客" type="application/atom+xml">
@@ -136,42 +136,134 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <h3> 
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Zygote学习笔记">
+            
+	            Zygote学习笔记
+            
+        </h1>
+        <div class="post-meta">
     
-        Android JUnit Runner 
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
     
     
-</h3>
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+            
+        </span>
+    </span>
+    
 
-    <article class="post">
+    
         
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title"> 
-                    <a href="/2018/08/23/Android测试-Android-JUnit-Runner/">Android测试-Android JUnit Runner</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2018年08月23日
-                    </time>
-                </div>
-            </div>
-            <p class="brief">
-                
-                    Android JUnit Runner 介绍
-是一个测试运行器，用于运行 Junit3 和 Junit4 的 Android 测试包 
-替换 Instrumentation Test Runner（一个比较旧的测试运行器） 
-支持 ...
-                
-            </p> 
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2021/04/12</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>Zygote 进程启动后会先调用 App_main.cpp 的 Main 方法，这个方法会调用 AppRuntime 的 start 方法来完成重要功能。AppRuntime 是 AndroidRuntime 的子类，主要完成了三个大功能</p>
+<ul>
+<li><p>startVm 创建虚拟机</p>
+<p>  这个函数绝大部分都是设置虚拟机的参数</p>
+</li>
+<li><p>startReg 注册JNI函数</p>
+<p>  将 Android Framework 下 Java Class 的 native 方法进行动态注册(关联对应的 JNI 函数)。</p>
+</li>
+<li><p>ZygoteInit.main 调用 Java Class 的 main</p>
+<p>  调用了 Java 层的入口方法</p>
+</li>
+</ul>
+<p>然后余下的初始操做大多都是由 Java 层实现。ZygoteInit 的 main 函数有如下关键的步骤</p>
+<ul>
+<li><p>registerZygoteSocket 建立IPC通信服务端</p>
+</li>
+<li><p>preloadClasses 和 preloadResources 预加载类和资源</p>
+</li>
+<li><p>startSystemServer 启动 system_server</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">startSystemServer</span><span class="params">()</span> <span class="keyword">throws</span> MethodAndArgsCaller,RuntimeException </span>&#123;</span><br><span class="line">    <span class="comment">//设置参数</span></span><br><span class="line">    String args[]=&#123;..., <span class="string">"com.android.server.SystemServer"</span>&#125;;</span><br><span class="line">    ZygoteConnection.Arguments parsedArgs = <span class="keyword">null</span>；</span><br><span class="line">    <span class="keyword">int</span> pid；</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        parsedArgs = <span class="keyword">new</span> ZygoteConnection.Arguments(args);</span><br><span class="line">        pid = Zygote.forkSystemServer(parsedArgs.uid, parsedArgs.gid, parsedArgs.gids, debugFlags, parsedArgs.debugFlags, <span class="keyword">null</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IllegalArgumentException ex) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(ex);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(pid == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//根据 Fork 函数的然后值，这里处理子进程，也就是 system_server 的进程</span></span><br><span class="line">        handleSystemServerProcess(parsedArgs);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>runSelectLoopMode 处理客户连接和客户请求</p>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处  <a href="" target="_blank">©Wairdell</a>
+            
         </div>
-    </article>
- 
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2021/04/12/JNI学习笔记/" class="next-post btn btn-default" title='JNI学习笔记'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">JNI学习笔记</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
 
 
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zOTEwMC8xNTYyNw==">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
 
 
+    </div>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 
 
 
