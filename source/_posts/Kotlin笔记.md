@@ -55,3 +55,7 @@ println()
 | shl(bits)   | 左移运算符       | 
 | shr(bits)   | 右移运算符       | 
 | ushr(bits)  | 无符号右移运算符  | 
+
+- ###
+判断泛型同时属于多种类型
+fun <T> demo(obj : T) where T : Type1, T : Type2
